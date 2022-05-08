@@ -2,6 +2,7 @@ package routes
 
 import (
 	"backend/controllers"
+	"backend/middleware"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -27,6 +28,11 @@ func SetupRouter() *gin.Engine {
 	v1 := r.Group("/api/v1")
 	{
 		v1.GET("/ping", controllers.PingHandler)
+		v1.POST("/register", controllers.RegisterHandler)
+		v1.POST("/login", controllers.LoginHandler)
+		// From here, there will be only authenticated routes
+		// TODO implement checkToken middleware
+		v1.GET("/pingWithToken", middleware.AuthorizationMiddleware(), middleware.TokenAuthMiddleware(), controllers.PingHandlerWithToken)
 	}
 
 	return r

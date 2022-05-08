@@ -11,3 +11,9 @@ func PingHandler(c *gin.Context) {
 		"message": "Pong from ESP-BACKEND",
 	})
 }
+
+func PingHandlerWithToken(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Pong from ESP-BACKEND - Token is valid",
+	})
+}

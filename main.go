@@ -28,7 +28,9 @@ func initGinServer() {
 func main() {
 	initGinServer()
 
-	config.App = config.NewServices(router, &ginConfig, ginConfig.SERVER_ENV)
+	authService := helpers.GetEnv("AUTH_SERVICE", "http://localhost:8081")
+
+	config.App = config.NewServices(router, &ginConfig, ginConfig.SERVER_ENV, authService)
 
 	log.Fatal(router.Run(fmt.Sprintf("0.0.0.0:%s", ginConfig.SERVER_PORT)))
 }
