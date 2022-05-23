@@ -86,5 +86,12 @@ func LoginHandler(c *gin.Context) {
 
 	json.Unmarshal(readBody, &response)
 
+	if response.Message == "User not found!" {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": response.Message,
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, response)
 }
